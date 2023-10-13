@@ -7,7 +7,7 @@ organization := "com.c28n"
 // For the Scala API, Spark 3.3.0 uses Scala 2.12.
 // You will need to use a compatible Scala version (2.12.x).
 
-version := "0.1"
+version := "0.2"
 scalaVersion := "2.12.18"
 
 val sparkVersion = "3.3.0"
