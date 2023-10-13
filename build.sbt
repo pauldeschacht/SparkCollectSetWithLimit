@@ -1,10 +1,16 @@
 name := "SparkCollectSetLimit"
 organization := "com.c28n"
 
+// https://spark.apache.org/docs/3.3.0/
+// Spark runs on Java 8/11/17, Scala 2.12/2.13, Python 3.7+ and R 3.5+.
+// Java 8 prior to version 8u201 support is deprecated as of Spark 3.2.0.
+// For the Scala API, Spark 3.3.0 uses Scala 2.12.
+// You will need to use a compatible Scala version (2.12.x).
+
 version := "0.1"
 scalaVersion := "2.12.18"
 
-val sparkVersion = "3.4.1"
+val sparkVersion = "3.3.0"
 val slf4jVersion = "1.7.10"
 
 scalacOptions += "-target:jvm-1.8"
@@ -31,8 +37,8 @@ lazy val global = project
     libraryDependencies ++= Seq(
       "org.apache.spark" %% "spark-core" % sparkVersion % "it",
       "org.apache.spark" %% "spark-sql" % sparkVersion % "it",
-      "org.scalatest" %% "scalatest" % "3.1.0" % "test,it",
-      "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.13.4" % "it",
+      "org.scalatest" %% "scalatest" % "3.2.15" % "test,it",
+      "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.14.2" % "it",
     ),
     assemblyPackageScala / assembleArtifact := false,
     assembly / assemblyMergeStrategy := {
