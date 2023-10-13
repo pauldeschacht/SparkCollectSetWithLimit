@@ -6,7 +6,6 @@ import org.scalatest.funsuite.AnyFunSuite
 case class TestRecord(identifier: String,
                       sessionId: String,
                       age: Int)
-
 object TestRecord {
   def create(identifier: String, sessionId: String, age: Int) = new TestRecord(identifier, sessionId, age)
 }

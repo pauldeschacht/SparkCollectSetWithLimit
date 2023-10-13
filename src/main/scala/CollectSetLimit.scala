@@ -1,14 +1,14 @@
 package com.c28n.agg
 
 import org.apache.spark.sql.catalyst.encoders.ExpressionEncoder
-import org.apache.spark.sql.{Encoder}
+import org.apache.spark.sql.{Encoders, Encoder}
 import org.apache.spark.sql.expressions.Aggregator
 
 import scala.collection.mutable
 
 //TODO: make it work with Any (when I'm using HashSet[Any], I get the error "[ENCODER_NOT_FOUND] Not found an encoder of the type Any to Spark SQL internal representation"
 
-case class CollectSetLimit(limit: Int) extends Aggregator[String, mutable.HashSet[String], mutable.HashSet[String]] {
+case class CollectSetLimit(limit: Int) extends Aggregator[String, mutable.HashSet[String], Array[String]] {
   // A zero value for this aggregation. Should satisfy the property that any b + zero = b
   def zero: mutable.HashSet[String] = mutable.HashSet.empty[String]
 
@@ -29,11 +29,11 @@ case class CollectSetLimit(limit: Int) extends Aggregator[String, mutable.HashSe
   }
 
   // Transform the output of the reduction
-  def finish(reduction: mutable.HashSet[String]): mutable.HashSet[String] = reduction.take(limit)
+  def finish(reduction: mutable.HashSet[String]): Array[String] = reduction.take(limit).toArray[String]
 
-  def bufferEncoder: Encoder[mutable.HashSet[String]] = ExpressionEncoder[mutable.HashSet[String]]
+  def bufferEncoder: Encoder[mutable.HashSet[String]] = Encoders.kryo[mutable.HashSet[String]]// //ExpressionEncoder[mutable.HashSet[String]]
 
-  def outputEncoder: Encoder[mutable.HashSet[String]] = ExpressionEncoder[mutable.HashSet[String]]
+  def outputEncoder: Encoder[Array[String]] = ExpressionEncoder[Array[String]]
 
 }
 
