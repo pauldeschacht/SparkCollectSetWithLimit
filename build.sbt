@@ -7,10 +7,10 @@ organization := "com.c28n"
 // For the Scala API, Spark 3.3.0 uses Scala 2.12.
 // You will need to use a compatible Scala version (2.12.x).
 
-version := "0.2"
+version := "0.3"
 scalaVersion := "2.12.18"
 
-val sparkVersion = "3.3.0"
+val sparkVersion = "3.1.0"
 val slf4jVersion = "1.7.10"
 
 scalacOptions += "-target:jvm-1.8"
@@ -37,8 +37,10 @@ lazy val global = project
     libraryDependencies ++= Seq(
       "org.apache.spark" %% "spark-core" % sparkVersion % "it",
       "org.apache.spark" %% "spark-sql" % sparkVersion % "it",
-      "org.scalatest" %% "scalatest" % "3.2.15" % "test,it",
-      "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.14.2" % "it",
+      "org.slf4j" % "slf4j-api" % slf4jVersion % "test,it",
+      "org.slf4j" % "slf4j-simple" % slf4jVersion % "test,it",
+      "commons-logging" % "commons-logging" % "1.2" % "test,it",
+      "org.scalatest" %% "scalatest" % "3.2.15" % "test,it"
     ),
     assemblyPackageScala / assembleArtifact := false,
     assembly / assemblyMergeStrategy := {

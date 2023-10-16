@@ -1,7 +1,7 @@
 package com.c28n.agg
 
 import org.apache.spark.sql.catalyst.encoders.ExpressionEncoder
-import org.apache.spark.sql.{Encoders, Encoder}
+import org.apache.spark.sql.{SparkSession, functions, Encoders, Encoder}
 import org.apache.spark.sql.expressions.Aggregator
 
 import scala.collection.mutable
@@ -35,5 +35,11 @@ case class CollectSetLimit(limit: Int) extends Aggregator[String, mutable.HashSe
 
   def outputEncoder: Encoder[Array[String]] = ExpressionEncoder[Array[String]]
 
+}
+
+object CollectSetLimit {
+  def register(spark: SparkSession, limit: Int): Unit = {
+    spark.udf.register("collect_set_limit", functions.udaf(new CollectSetLimit(limit)))
+  }
 }
 

@@ -36,7 +36,7 @@ class CollectSetLimitTest extends AnyFunSuite {
 
   val df = base.toDF
 
-  spark.udf.register("collect_set_limit", functions.udaf(new CollectSetLimit(10)))
+  CollectSetLimit.register(spark, 10)
 
   test("CollectSetWithLimit Agg - SQL") {
 
